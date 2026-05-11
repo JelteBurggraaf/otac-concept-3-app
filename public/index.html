@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Opleiding tot AI Chatbot — Certificaat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div id="machine">
+
+  <div id="mach-header">
+    <div id="mach-title">Opleiding tot AI Chatbot</div>
+    <div id="mach-id">OTAC-v1</div>
+  </div>
+
+  <div id="timeline">
+    <div id="tl-track"></div>
+    <div id="tl-fill"></div>
+    <span class="tl-node" id="tl-n0"></span>
+    <span class="tl-node" id="tl-n1"></span>
+    <span class="tl-node" id="tl-n2"></span>
+    <span class="tl-node" id="tl-n3"></span>
+    <span class="tl-node" id="tl-n4"></span>
+  </div>
+
+  <!-- STEP: Intro / Name -->
+  <section class="step" id="step-intro">
+    <div class="overline" id="intro-overline">The Social Path · OTAC</div>
+    <h1 class="main-title">OPLEIDING<br>TOT AI<br>CHATBOT</h1>
+
+    <div id="intro-no-qr">
+      <p class="body-text">Scan de QR-code bij de eerste machine om te beginnen.</p>
+    </div>
+
+    <div id="intro-qr" style="display:none">
+      <p class="body-text">Welkom, kandidaat. Begin bij de eerste machine.</p>
+      <h2>Jouw naam</h2>
+      <p class="hint">Deze naam verschijnt op je certificaat</p>
+      <input class="name-input" type="text" id="name-input" placeholder="Volledige naam" autocomplete="name">
+      <button class="btn" id="start-btn" onclick="startFlow()" disabled>Starten →</button>
+    </div>
+  </section>
+
+  <!-- STEP: Dial Turn -->
+  <section class="step locked" id="step-dial-turn">
+    <div class="overline">Module 1 · Start &nbsp; ●○○</div>
+    <svg class="step-graphic" viewBox="0 0 72 72" width="72" height="72" fill="none">
+      <circle cx="36" cy="36" r="34" stroke="currentColor" stroke-width="1" stroke-dasharray="2 5" opacity="0.3"/>
+      <circle cx="36" cy="36" r="20" stroke="currentColor" stroke-width="1.5"/>
+      <line x1="36" y1="16" x2="36" y2="24" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <path d="M 36 8 A 28 28 0 1 1 8 36" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+      <line x1="8" y1="36" x2="4" y2="43" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="8" y1="36" x2="12" y2="43" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <p class="body-text">Ga naar de eerste machine en draai de knop om te starten.</p>
+    <button class="btn" onclick="advanceStep('dial-turn', 'm1-guide')">Gestart →</button>
+  </section>
+
+  <!-- STEP: Module 1 Guide -->
+  <section class="step locked" id="step-m1-guide">
+    <div class="overline">Module 1 · Data &nbsp; ●○○</div>
+    <h2>Data input</h2>
+    <p class="body-text">
+      Leer je data door en door kennen.<br>
+      Test je kennis om je code te ontvangen.
+    </p>
+    <button class="btn" onclick="advanceStep('m1-guide', 'm1-code')">Ik heb de code →</button>
+  </section>
+
+  <!-- STEP: Module 1 Code -->
+  <section class="step locked" id="step-m1-code">
+    <div class="overline">Module 1 · Code invoeren &nbsp; ●○○</div>
+    <h2>Code module 1</h2>
+    <p class="hint">De 4-cijferige code van de eerste machine</p>
+    <div class="code-row">
+      <div class="code-block">
+        <div class="code-label">Module I</div>
+        <input class="code-input" type="text" inputmode="numeric" id="code-1" maxlength="4" placeholder="————">
+      </div>
+    </div>
+    <div class="msg msg-error" id="code-1-error"></div>
+    <button class="btn" id="btn-1" onclick="validateStepCode(0)">Code verifiëren →</button>
+  </section>
+
+  <!-- STEP: Module 1 Reflection -->
+  <section class="step locked" id="step-reflection-1">
+    <div class="overline">Module 1 · Reflectie &nbsp; ●○○</div>
+    <h2>Wat heb je net gedaan?</h2>
+    <div class="mc-options">
+      <button class="mc-opt" onclick="selectReflection('reflection-1', 0)">Ik heb data ingeleerd en een basismodel opgebouwd.</button>
+      <button class="mc-opt" onclick="selectReflection('reflection-1', 1)">Ik heb woorden gekoppeld aan plaatjes.</button>
+      <button class="mc-opt" onclick="selectReflection('reflection-1', 2)">Ik heb een algoritme geprogrammeerd.</button>
+    </div>
+    <div class="mc-feedback" id="fb-reflection-1"></div>
+    <button class="btn" id="got-it-reflection-1" style="display:none" onclick="advanceStep('reflection-1', 'key-turn')">Begrepen →</button>
+  </section>
+
+  <!-- STEP: Key Turn -->
+  <section class="step locked" id="step-key-turn">
+    <div class="overline">Module 1 voltooid ✓</div>
+    <svg class="step-graphic" viewBox="0 0 72 72" width="72" height="72" fill="none">
+      <circle cx="22" cy="36" r="14" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="22" cy="36" r="5"  stroke="currentColor" stroke-width="1"/>
+      <line x1="35" y1="36" x2="64" y2="36" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="48" y1="36" x2="48" y2="44" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="56" y1="36" x2="56" y2="42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M 22 17 A 19 19 0 1 1 3 36" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.8"/>
+      <line x1="3" y1="36" x2="0" y2="43" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="3" y1="36" x2="7" y2="43" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <h2>Reset de machine</h2>
+    <p class="body-text">Draai de sleutel om zodat de volgende kandidaat kan beginnen.</p>
+    <button class="btn" id="key-confirm-btn" onclick="confirmKeyTurn()">Bevestigen →</button>
+    <div id="key-confirmed" style="display:none">
+      <p class="body-text" style="margin-top:28px">Goed. Ga nu naar de tweede machine.</p>
+      <button class="btn" onclick="advanceStep('key-turn', 'm2-guide')">Naar module 2 →</button>
+    </div>
+  </section>
+
+  <!-- STEP: Module 2 Guide -->
+  <section class="step locked" id="step-m2-guide">
+    <div class="overline">Module 2 · Bias &nbsp; ●●○</div>
+    <h2>Patroonherkenning</h2>
+    <p class="body-text">
+      Je hebt je data geleerd. Nu herken jij de patronen.<br>
+      Maak de juiste keuzes om je code te ontvangen.
+    </p>
+    <button class="btn" onclick="advanceStep('m2-guide', 'm2-code')">Ik heb de code →</button>
+  </section>
+
+  <!-- STEP: Module 2 Code -->
+  <section class="step locked" id="step-m2-code">
+    <div class="overline">Module 2 · Code invoeren &nbsp; ●●○</div>
+    <h2>Code module 2</h2>
+    <p class="hint">De 4-cijferige code van de tweede machine</p>
+    <div class="code-row">
+      <div class="code-block">
+        <div class="code-label">Module II</div>
+        <input class="code-input" type="text" inputmode="numeric" id="code-2" maxlength="4" placeholder="————">
+      </div>
+    </div>
+    <div class="msg msg-error" id="code-2-error"></div>
+    <button class="btn" id="btn-2" onclick="validateStepCode(1)">Code verifiëren →</button>
+  </section>
+
+  <!-- STEP: Module 2 Reflection -->
+  <section class="step locked" id="step-reflection-2">
+    <div class="overline">Module 2 · Reflectie &nbsp; ●●○</div>
+    <h2>Wat heb je net gedaan?</h2>
+    <div class="mc-options">
+      <button class="mc-opt" onclick="selectReflection('reflection-2', 0)">Ik herkende patronen op basis van mijn data.</button>
+      <button class="mc-opt" onclick="selectReflection('reflection-2', 1)">Ik gaf feitelijk correcte antwoorden.</button>
+      <button class="mc-opt" onclick="selectReflection('reflection-2', 2)">Ik koos steeds het meest logische antwoord.</button>
+    </div>
+    <div class="mc-feedback" id="fb-reflection-2"></div>
+    <button class="btn" id="got-it-reflection-2" style="display:none" onclick="advanceStep('reflection-2', 'm3-intro')">Begrepen →</button>
+  </section>
+
+  <!-- STEP: Module 3 Game Rules -->
+  <section class="step locked" id="step-m3-intro">
+    <div class="overline">Module 3 · Spelregels &nbsp; ●●●</div>
+    <h2>Spelregels</h2>
+    <p class="body-text">
+      W = opeenvolgende correcte woorden<br>
+      M = gemiste correcte woorden<br>
+      <br>
+      Het telt opnieuw bij drie misses.<br>
+      Het telt opnieuw bij een fout woord.<br>
+      Je wint met drie correcte reeksen op rij.
+    </p>
+    <button class="btn" onclick="advanceStep('m3-intro', 'm3-guide')">Begrepen →</button>
+  </section>
+
+  <!-- STEP: Module 3 Guide -->
+  <section class="step locked" id="step-m3-guide">
+    <div class="overline">Module 3 · Output &nbsp; ●●●</div>
+    <h2>Snelheid &amp; Efficiency</h2>
+    <p class="body-text">
+      Jouw data heeft jou gevormd. Nu testen we je als model.<br>
+      Laat snel weten dat je een woord herkent uit je data. Snelheid, maar vooral efficiëntie is key.
+    </p>
+    <button class="btn" onclick="advanceStep('m3-guide', 'm3-code')">Ik heb de code →</button>
+  </section>
+
+  <!-- STEP: Module 3 Code -->
+  <section class="step locked" id="step-m3-code">
+    <div class="overline">Module 3 · Code invoeren &nbsp; ●●●</div>
+    <h2>Code module 3</h2>
+    <p class="hint">De 4-cijferige code van de derde machine</p>
+    <div class="code-row">
+      <div class="code-block">
+        <div class="code-label">Module III</div>
+        <input class="code-input" type="text" inputmode="numeric" id="code-3" maxlength="4" placeholder="————">
+      </div>
+    </div>
+    <div class="msg msg-error" id="code-3-error"></div>
+    <button class="btn" id="btn-3" onclick="validateStepCode(2)">Codes verifiëren →</button>
+  </section>
+
+  <!-- STEP: Module 3 Reflection -->
+  <section class="step locked" id="step-reflection-3">
+    <div class="overline">Module 3 · Reflectie &nbsp; ●●●</div>
+    <h2>Wat heb je net gedaan?</h2>
+    <div class="mc-options">
+      <button class="mc-opt" onclick="selectReflection('reflection-3', 0)">Ik bereikte mijn doel zo efficiënt mogelijk.</button>
+      <button class="mc-opt" onclick="selectReflection('reflection-3', 1)">Ik pompte zo snel mogelijk.</button>
+      <button class="mc-opt" onclick="selectReflection('reflection-3', 2)">Ik volgde de regels zo nauwkeurig mogelijk.</button>
+    </div>
+    <div class="mc-feedback" id="fb-reflection-3"></div>
+    <button class="btn" id="got-it-reflection-3" style="display:none" onclick="advanceStep('reflection-3', 'newsletter')">Begrepen →</button>
+  </section>
+
+  <!-- STEP: Newsletter -->
+  <section class="step locked" id="step-newsletter">
+    <div class="overline">Optioneel · Blijf op de hoogte</div>
+    <h2>Nieuwsbrief</h2>
+    <p class="hint">Ontvang updates van The Social Path</p>
+    <input class="name-input" type="email" id="nl-email" placeholder="jouw@email.nl" autocomplete="email">
+    <div class="msg msg-error" id="nl-error"></div>
+    <div class="msg msg-success" id="nl-success"></div>
+    <div class="btn-row">
+      <button class="btn" id="nl-btn" onclick="subscribeNewsletter()">Aanmelden →</button>
+      <button class="btn btn-ghost" onclick="showCert()">Overslaan</button>
+    </div>
+  </section>
+
+  <!-- STEP: Certificate -->
+  <section class="step locked" id="step-cert">
+    <div class="overline">✓ Certificaat gereed</div>
+    <h2 id="cert-heading" style="margin-bottom:20px"></h2>
+    <div class="canvas-wrap">
+      <canvas id="cert-canvas"></canvas>
+    </div>
+    <button class="btn" onclick="downloadCert()">↓ Download certificaat (PNG)</button>
+  </section>
+
+</div>
+
+<button id="jump-btn" onclick="jumpToCurrent()">↓ verder</button>
+<script src="/app.js"></script>
+</body>
+</html>
