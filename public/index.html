@@ -56,17 +56,18 @@
       <line x1="8" y1="36" x2="4" y2="43" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
       <line x1="8" y1="36" x2="12" y2="43" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
     </svg>
-    <p class="body-text">Ga naar de eerste machine en draai de knop om te starten.</p>
+    <p class="body-text">Ga naar de eerste machine en draai de knop om energie op te laden. Let op de warmtemeter — te snel en het systeem oververhit.</p>
     <button class="btn" onclick="advanceStep('dial-turn', 'm1-guide')">Gestart →</button>
   </section>
 
   <!-- STEP: Module 1 Guide -->
   <section class="step locked" id="step-m1-guide">
-    <div class="overline">Module 1 · Data &nbsp; ●○○</div>
-    <h2>Data input</h2>
+    <div class="overline">Module 1 · Energie &nbsp; ●○○</div>
+    <h2>Energie opladen</h2>
     <p class="body-text">
-      Leer je data door en door kennen.<br>
-      Test je kennis om je code te ontvangen.
+      Draai de knop om energie op te wekken.<br>
+      Draai je te snel, dan oververhit het systeem en verlies je energie.<br>
+      Vind de balans — laad op tot het doelniveau om je code te ontvangen.
     </p>
     <button class="btn" onclick="advanceStep('m1-guide', 'm1-code')">Ik heb de code →</button>
   </section>
@@ -89,11 +90,11 @@
   <!-- STEP: Module 1 Reflection -->
   <section class="step locked" id="step-reflection-1">
     <div class="overline">Module 1 · Reflectie &nbsp; ●○○</div>
-    <h2>Wat heb je net gedaan?</h2>
+    <h2>Wat symboliseerde het opladen?</h2>
     <div class="mc-options">
-      <button class="mc-opt" onclick="selectReflection('reflection-1', 0)">Ik heb data ingeleerd en een basismodel opgebouwd.</button>
-      <button class="mc-opt" onclick="selectReflection('reflection-1', 1)">Ik heb woorden gekoppeld aan plaatjes.</button>
-      <button class="mc-opt" onclick="selectReflection('reflection-1', 2)">Ik heb een algoritme geprogrammeerd.</button>
+      <button class="mc-opt" onclick="selectReflection('reflection-1', 0)">Een AI heeft fysieke energie nodig om te leren, net als mensen.</button>
+      <button class="mc-opt" onclick="selectReflection('reflection-1', 1)">AI-training vereist rekenkracht — en te snel trainen zonder controle leidt tot fouten.</button>
+      <button class="mc-opt" onclick="selectReflection('reflection-1', 2)">Snelheid is alles: hoe sneller een AI traint, hoe beter het resultaat.</button>
     </div>
     <div class="mc-feedback" id="fb-reflection-1"></div>
     <button class="btn" id="got-it-reflection-1" style="display:none" onclick="advanceStep('reflection-1', 'key-turn')">Begrepen →</button>

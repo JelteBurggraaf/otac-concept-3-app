@@ -201,9 +201,9 @@ async function validateStepCode(step) {
 // ── Reflections ──────────────────────────────────────────────────────────────
 const REFLECTIONS = {
   'reflection-1': [
-    { correct: true,  text: 'Precies. Je hebt niet alleen losse woorden onthouden — je hebt een model gebouwd dat begrijpt wat de data betekent.' },
-    { correct: false, text: 'Begrijpelijk — de woorden waren zichtbaar en concreet. Maar het ging om je algemene begrip van de data, niet de specifieke koppelingen. Zo leert een AI ook: uit voorbeelden, niet uit regels.' },
-    { correct: false, text: 'Logische gedachte, maar je hebt niks geprogrammeerd. Je hebt geleerd. Het verschil is groter dan het lijkt.' },
+    { correct: false, text: 'Dat klopt deels — energie kost inspanning. Maar bij AI gaat het om rekenkracht en data, niet om fysieke energie. Wat je wel oefende: balans vinden tussen snelheid en controle.' },
+    { correct: true,  text: 'Precies. Een AI heeft enorme rekenkracht nodig om te trainen. Te snel trainen zonder controle leidt tot fouten — net als oververhitten. De balans is cruciaal.' },
+    { correct: false, text: 'Energie is nodig, maar snelheid alleen is niet genoeg. Een te hoge trainingssnelheid zonder sturing leidt juist tot instabiliteit — dat is wat het oververhitten symboliseerde.' },
   ],
   'reflection-2': [
     { correct: true,  text: 'Klopt. Je gebruikte wat je eerder had geleerd om nieuwe input te interpreteren. Dat is precies wat een getraind model doet.' },
