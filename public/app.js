@@ -123,6 +123,17 @@ document.getElementById('name-input').addEventListener('keydown', function(e) {
 function startFlow() {
   participantName = document.getElementById('name-input').value.trim();
   if (!participantName) return;
+
+  // Signal the installation that the participant is ready
+  const m = location.pathname.match(/\/sessie\/([A-Za-z0-9_=-]+)/);
+  if (m) {
+    fetch('/.netlify/functions/codes?action=set-name', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ token: m[1], name: participantName }),
+    }).catch(() => {});
+  }
+
   advanceStep('intro', 'dial-turn');
 }
 

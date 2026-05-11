@@ -1,6 +1,22 @@
 import { getStore } from '@netlify/blobs';
 
+const CORS = {
+  'Access-Control-Allow-Origin':  '*',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
+
+function json(body, init = {}) {
+  return new Response(JSON.stringify(body), {
+    ...init,
+    headers: { 'Content-Type': 'application/json', ...CORS, ...(init.headers ?? {}) },
+  });
+}
+
 export default async function handler(req) {
+  // Handle CORS preflight
+  if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: CORS });
+
   const store = getStore('oltc-state');
   const action = new URL(req.url).searchParams.get('action');
 
@@ -9,7 +25,7 @@ export default async function handler(req) {
       store.get('last-codes-v2', { type: 'json' }),
       store.get('participant-count', { type: 'text' })
     ]);
-    return Response.json({
+    return json({
       codes: codesRaw ?? [32, 14, 78],
       participantCount: countRaw ? parseInt(countRaw) : 0
     });
@@ -19,21 +35,21 @@ export default async function handler(req) {
   if (action === 'validate-token' && req.method === 'POST') {
     let body;
     try { body = await req.json(); } catch {
-      return Response.json({ valid: false, error: 'Ongeldig verzoek.' }, { status: 400 });
+      return json({ valid: false, error: 'Ongeldig verzoek.' }, { status: 400 });
     }
     const { token } = body;
-    if (!token) return Response.json({ valid: false, error: 'Geen token.' }, { status: 400 });
+    if (!token) return json({ valid: false, error: 'Geen token.' }, { status: 400 });
     try {
       const decoded = Buffer.from(token.replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString('utf8');
       const codes = decoded.split(',').map(Number);
       if (codes.length !== 3 || codes.some(isNaN)) throw new Error();
     } catch {
-      return Response.json({ valid: false, error: 'Ongeldig token.' }, { status: 400 });
+      return json({ valid: false, error: 'Ongeldig token.' }, { status: 400 });
     }
     const countRaw = await store.get('participant-count', { type: 'text' });
     const newCount = (countRaw ? parseInt(countRaw) : 0) + 1;
     await store.set('participant-count', String(newCount));
-    return Response.json({ valid: true, participantNumber: newCount });
+    return json({ valid: true, participantNumber: newCount });
   }
 
   if (action === 'validate' && req.method === 'POST') {
@@ -41,12 +57,12 @@ export default async function handler(req) {
     try {
       body = await req.json();
     } catch {
-      return Response.json({ valid: false, error: 'Ongeldig verzoek.' }, { status: 400 });
+      return json({ valid: false, error: 'Ongeldig verzoek.' }, { status: 400 });
     }
 
     const { codes } = body;
     if (!Array.isArray(codes) || codes.length !== 3 || codes.some(c => typeof c !== 'number' || isNaN(c))) {
-      return Response.json({ valid: false, error: 'Drie geldige nummers vereist.' }, { status: 400 });
+      return json({ valid: false, error: 'Drie geldige nummers vereist.' }, { status: 400 });
     }
 
     const [lastCodesRaw, countRaw] = await Promise.all([
@@ -62,7 +78,7 @@ export default async function handler(req) {
     ).filter(i => i !== null);
 
     if (failedSlots.length > 0) {
-      return Response.json({
+      return json({
         valid: false,
         error: 'Een of meer codes zijn al eerder gebruikt of verlopen.',
         slots: failedSlots
@@ -75,9 +91,30 @@ export default async function handler(req) {
       store.set('participant-count', String(newCount))
     ]);
 
-    return Response.json({ valid: true, participantNumber: newCount });
+    return json({ valid: true, participantNumber: newCount });
   }
 
-  return Response.json({ error: 'Onbekende actie.' }, { status: 400 });
+  // set-name: webapp signals that a participant entered their name
+  if (action === 'set-name' && req.method === 'POST') {
+    let body;
+    try { body = await req.json(); } catch {
+      return json({ error: 'Invalid body' }, { status: 400 });
+    }
+    const { token, name } = body;
+    if (!token || !name) return json({ error: 'Missing token or name' }, { status: 400 });
+    await store.set(`start-${token}`, JSON.stringify({ name, startedAt: Date.now() }));
+    return json({ ok: true });
+  }
+
+  // poll-start: installation polls to know when participant is ready
+  if (action === 'poll-start') {
+    const token = new URL(req.url).searchParams.get('token');
+    if (!token) return json({ started: false });
+    const raw = await store.get(`start-${token}`, { type: 'json' });
+    if (!raw) return json({ started: false });
+    return json({ started: true, name: raw.name });
+  }
+
+  return json({ error: 'Onbekende actie.' }, { status: 400 });
 }
 
